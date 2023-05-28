@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
+import javax.inject.Named
 
 class ViewModelReceiver(
     private val context: Context
@@ -18,7 +19,7 @@ class ViewModelReceiver(
     }
 }
 
-class ViewModelReceiverFactory @Inject constructor(private val context: Context) :
+class ViewModelReceiverFactory @Inject constructor(@Named("appContext") private val context: Context) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ViewModelReceiver::class.java))

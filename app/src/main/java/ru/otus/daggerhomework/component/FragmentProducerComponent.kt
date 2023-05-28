@@ -1,22 +1,22 @@
 package ru.otus.daggerhomework.component
 
 import android.app.Activity
-import android.content.Context
+import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.BindsInstance
 import dagger.Module
-import dagger.Provides
 import dagger.Subcomponent
 import ru.otus.daggerhomework.ColorGenerator
 import ru.otus.daggerhomework.ColorGeneratorImpl
 import ru.otus.daggerhomework.FragmentProducer
-import javax.inject.Singleton
+import ru.otus.daggerhomework.ViewModelProducerFactory
 
 /**
  *
  */
 //@FeatureScope
 @Subcomponent(
-    modules = [FragmentProducerModule::class],
+    modules = [FragmentProducerModule::class]
 //    dependencies = [ApplicationComponent::class]
 )
 
@@ -28,17 +28,18 @@ interface FragmentProducerComponent {
     //создаем фабрику вс абкомпоненте
     @Subcomponent.Factory
     interface Factory {
-        fun create(
-        ): FragmentProducerComponent
+        fun create(@BindsInstance context: Activity): FragmentProducerComponent
     }
 
 }
 
 @Module
-class FragmentProducerModule {
+interface FragmentProducerModule {
 
-    @Provides
-    fun getColorGenerator(): ColorGenerator {
-        return ColorGeneratorImpl()
-    }
+    @Binds
+    fun getColorGenerator(colorGenerator: ColorGeneratorImpl): ColorGenerator
+
+
+    @Binds
+    fun bindFactory(viewModelProducerFactory: ViewModelProducerFactory): ViewModelProvider.Factory
 }

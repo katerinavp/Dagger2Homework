@@ -12,8 +12,6 @@ import javax.inject.Inject
 class FragmentProducer : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProducerFactory
-    @Inject
-    lateinit var colorGenerator: ColorGenerator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +19,7 @@ class FragmentProducer : Fragment() {
             .get(ViewModelProducer::class.java)
         (requireActivity().application as App).getAppComponent()
             .fragmentProducerComponent()
-            .create()
+            .create(requireActivity())
             .inject(this)
     }
     override fun onCreateView(

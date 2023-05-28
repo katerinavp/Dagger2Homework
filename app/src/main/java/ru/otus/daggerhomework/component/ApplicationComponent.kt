@@ -5,7 +5,6 @@ import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
-import ru.otus.daggerhomework.App
 import ru.otus.daggerhomework.MainActivity
 import javax.inject.Singleton
 
@@ -18,14 +17,16 @@ import javax.inject.Singleton
 @Component(modules = [SubcomponentModule::class])
 interface ApplicationComponent {
 
-    fun mainActivity(): MainActivityComponent.Builder
+//    fun mainActivity(): MainActivityComponent.Builder
+
+    fun mainActivityComponent(): MainActivityComponent.Factory
     fun fragmentProducerComponent(): FragmentProducerComponent.Factory
     fun fragmentRecieverComponent(): FragmentRecieverComponent.Factory
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun context(context: Context): Builder  //  прописываем те методы которые даггер должен опрокинуть в билдерюб чтобы в рантайме опрокидывать объекты какие либо в момент создания графа
+        fun context(context: Context): Builder  //  прописываем те методы которые даггер должен прокинуть в билдер, чтобы в рантайме прокидывать объекты какие либо в момент создания графа
 
         fun build(): ApplicationComponent
     }
